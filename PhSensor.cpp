@@ -12,23 +12,27 @@ void PhSensor::getReading() {
     ;
 }
 
-static bool inRange(int min, int max, int ph) {
-    // Boolean return if the ph reading is in desired range
-    if (ph < max && ph > min) {
+bool PhSensor::aboveRange() {
+    if (this->ph > this->maxPh) {
         return true;
     } else {
         return false;
     };
 }
 
-void PhSensor::sendToPi() {
-    // TODO: implement
-    // sends data to pi
-    ;
+bool PhSensor::belowRange() {
+    if (this->ph < this->minPh) {
+        return true;
+    } else {
+        return false;
+    };
 }
 
-void PhSensor::getRangeFromPi() {
-    // TODO: implement
-    // gets the max and min ph from pi
-    ;
+void PhSensor::sendSensorLog() {
+    sendData(this->ph, "ph_log");
+}
+
+void PhSensor::getRange() {
+    string response = getData("ph_range");
+    // TODO: Parse response and update this->maxPh and this->minPh
 }
