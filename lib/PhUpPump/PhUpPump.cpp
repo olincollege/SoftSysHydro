@@ -12,6 +12,6 @@ void PhUpPump::sendLog() {
 };
 
 void PhUpPump::getInterval() {
-    string response = getData("ph_interval");
+    String response = getData("ph_interval");
     // TODO: parse response and update interval data member
 };

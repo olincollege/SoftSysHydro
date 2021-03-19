@@ -29,10 +29,11 @@ bool PhSensor::belowRange() {
 }
 
 void PhSensor::sendSensorLog() {
-    sendData(this->ph, "ph_log");
+    String res = sendData(this->ph, "ph_log");
+    // TODO: Handle if res == "error"
 }
 
 void PhSensor::getRange() {
-    string response = getData("ph_range");
+    String response = getData("ph_range");
     // TODO: Parse response and update this->maxPh and this->minPh
 }

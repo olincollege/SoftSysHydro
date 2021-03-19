@@ -1,3 +1,5 @@
+#ifndef PHSENSOR_H
+#define PHSENSOR_H
 #include "PiWrapper.h"
 
 class PhSensor: public PiWrapper {
@@ -26,3 +28,5 @@ class PhSensor: public PiWrapper {
     // Updates: interval data member
     void getInterval();
 };
+
+#endif

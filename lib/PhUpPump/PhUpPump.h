@@ -1,9 +1,11 @@
+#ifndef PHUPPUMP_H
+#define PHUPPUMP_H
 #include "PiWrapper.h"
 
 class PhUpPump: public PiWrapper {
     // Inherits from PiWrapper for interacting with pi
     public:
-    string lastDispense;
+    String lastDispense;
     int interval;
 
     // Dispense pH up solution for a set amount of time
@@ -14,3 +16,5 @@ class PhUpPump: public PiWrapper {
     // Get dispense interval from pi via pi wrapper
     void getInterval();
 };
+
+#endif
