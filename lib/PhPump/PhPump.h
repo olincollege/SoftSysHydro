@@ -1,12 +1,14 @@
-#ifndef PHUPPUMP_H
-#define PHUPPUMP_H
+#ifndef PHPUMP_H
+#define PHPUMP_H
 #include "PiWrapper.h"
 
-class PhUpPump: public PiWrapper {
+class PhPump: public PiWrapper {
     // Inherits from PiWrapper for interacting with pi
     public:
-    String lastDispense;
+    char* lastDispense;
     int interval;
+    char *type = "ph_down";
+    char *interval_req = "ph/interval";
 
     // Dispense pH up solution for a set amount of time
     // Updates lastDispense data member

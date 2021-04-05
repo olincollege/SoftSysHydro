@@ -4,13 +4,13 @@
 
 class PiWrapper {
     public:
-    String port = "/dev/ttyACM0";
+    char *port = "/dev/ttyACM0";
     // Send data to the pi
-    static String sendData(int data, String type);
+    static char* sendData(int data, char* type);
     // Send data to the pi
-    static void sendData(String data, String type);
+    static char* sendData(char* data, char* type);
     // Get data from the pi
-    static String getData(String request);
+    static char* getData(char* request);
 };
 
 #endif

@@ -5,13 +5,15 @@
 class PhSensor: public PiWrapper {
     // Inherits from PiWrapper for interacting with pi
     public:
+    char *type = "ph";
     int ph;
-    int maxPh;
-    int minPh;
+    int maxPh = 7.5;
+    int minPh = 5.5;
     int interval;
+    uint8_t pin;
 
     // Constructor
-    PhSensor(); 
+    PhSensor(uint8_t analogPin); 
     // Get pH readings from sensor
     // Updates: ph data member
     void getReading();
