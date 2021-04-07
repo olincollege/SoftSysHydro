@@ -1,27 +1,39 @@
 #include "PiWrapper.h"
 
-String PiWrapper::sendData(int data, String type) {
-    String response = "waiting";
+char* PiWrapper::sendData(int data, char* type) {
+    char *response = "waiting";
+    char *reqType = ":post:";
     Serial.print(type);
+    Serial.print(reqType);
     Serial.print(data);
     Serial.print("\n");
     while (response == "waiting"){
-        response = Serial.readStringUntil('\n');
+        Serial.readStringUntil('\n').toCharArray(response, 50);
     }
     return response;
 }
 
-void PiWrapper::sendData(String data, String type) {
-    // TODO: implement
-    // Send data to the pi
-    // TODO: Define a set of standardized types that the pi will interpret
-    // returns "success" or "error"
-    ;
+char* PiWrapper::sendData(char* data, char* type) {
+    char *response = "waiting";
+    char *reqType = ":post:";
+    Serial.print(type);
+    Serial.print(reqType);
+    Serial.print(data);
+    Serial.print("\n");
+    while (response == "waiting"){
+        Serial.readStringUntil('\n').toCharArray(response, 50);
+    }
+    return response;
 }
 
-String PiWrapper::getData(String request) {
-    // TODO: implement
-    // Get data from the pi
-    // TODO: Define a set of standardized requests that the pi will interpret
-    ;
+char* PiWrapper::getData(char* request) {
+    char *response = "waiting";
+    char *reqType = ":get:";
+    Serial.print(reqType);
+    Serial.print(request);
+    Serial.print("\n");
+    while (response == "waiting"){
+        Serial.readStringUntil('\n').toCharArray(response, 50);
+    }
+    return response;
 }

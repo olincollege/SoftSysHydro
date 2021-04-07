@@ -1,15 +1,13 @@
 #include "PhSensor.h"
+#include <ph_grav.h>
 
-PhSensor::PhSensor() {
-    ;
+PhSensor::PhSensor(uint8_t analogPin) {
+    this-> pin = A0;
 }
 
 void PhSensor::getReading() {
-    // TODO:
-    // Interface with ph sensor
-    // Get the reading
-    // Update ph data member
-    ;
+    Gravity_pH pH = this->pin; //Assigns pin for pH signal
+    this -> ph = pH.read_ph();
 }
 
 bool PhSensor::aboveRange() {
@@ -29,11 +27,12 @@ bool PhSensor::belowRange() {
 }
 
 void PhSensor::sendSensorLog() {
-    String res = sendData(this->ph, "ph_log");
+    char *res = sendData(this->ph, this->type);
     // TODO: Handle if res == "error"
 }
 
 void PhSensor::getRange() {
-    String response = getData("ph_range");
+    char *data = "/range";
+    char *response = getData(strcat(this->type, data));
     // TODO: Parse response and update this->maxPh and this->minPh
 }
