@@ -6,12 +6,17 @@
 class Temperature: public PiWrapper {
     // Inherits from PiWrapper for interaction with pi
     public:
-    int temperature;
+    double resistance;
+    double voltage;
+    double temperature;
     uint8_t pin;
+    char *type = "temp";
 
     Temperature(uint8_t pin);
 
-    void getReading();
+    void getRawReading();
+    void getTemp();
+    void sendSensorLog();
 
 };
 

@@ -2,19 +2,29 @@
 #include <PhSensor.h>
 #include <PhPump.h>
 #include <ph_grav.h>
-
-Gravity_pH pH = A0; //Assigns pin for pH signal
+#include <Temperature.h>
+PhSensor phSensor(A0);
+Gravity_pH grav_ph_sensor(A0);
+Temperature temperature(A1);
 
 void setup() {
   Serial.begin(9600);
+  
 }
 
 void loop() {
-  PhSensor phSensor(A0);
-  phSensor.ph = 7;
-  phSensor.sendSensorLog();
-  //Serial.print("pH: ");
-  //Serial.println(pH.read_ph());
-  delay(10000);
+  //phSensor.ph = 7;
+  phSensor.getReading();
+  //phSensor.sendSensorLog();
+  Serial.print("ph: post: ");
+  Serial.println(phSensor.ph);
+
+  
+  //temperature.getTemp();
+  temperature.getTemp();
+  Serial.print("temp: post: ");
+  Serial.println(temperature.temperature);
+  //temperature.sendSensorLog();
+  delay(1000);
   // put your main code here, to run repeatedly:
 }

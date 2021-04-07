@@ -2,18 +2,21 @@
 #include "Arduino.h"
 
 Temperature::Temperature(uint8_t pin) {
-    this->pin = pin;
+    this -> pin = pin;
 }
 
-int Temperature::getRawReading() {
-    int voltage;
-    voltage = analogRead(this->pin);
-    return voltage;
+void Temperature::getRawReading() {
+    this -> voltage = analogRead(this -> pin) * 5.00 / 1024;
+
 }
 
-double Temperature::getTemp() {
-    double temperature;
-    int v_out = getRawReading();
-    int resistance = 10000 * v_out / (5 - v_out);
-    temperature = (double) (267.4 * pow(resistance,-0.1112) - 182);
+void Temperature::getTemp() {
+    getRawReading();
+    this->resistance = (double) 10 * this->voltage / (5 - voltage);
+    this->temperature = (double) (267.4 * pow(resistance,-0.1112) - 182);
+}
+
+void Temperature::sendSensorLog() {
+    getTemp();
+    char *res = sendData(this->temperature, this->type);
 }
