@@ -10,11 +10,9 @@ void setup() {
 }
 
 void loop() {
+  delay(5000);
   PhSensor phSensor(A0);
   phSensor.ph = 7;
   phSensor.sendSensorLog();
-  //Serial.print("pH: ");
-  //Serial.println(pH.read_ph());
-  delay(10000);
   // put your main code here, to run repeatedly:
 }

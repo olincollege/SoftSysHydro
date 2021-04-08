@@ -18,14 +18,6 @@ bool PhSensor::aboveRange() {
     };
 }
 
-bool PhSensor::belowRange() {
-    if (this->ph < this->minPh) {
-        return true;
-    } else {
-        return false;
-    };
-}
-
 void PhSensor::sendSensorLog() {
     char *res = sendData(this->ph, this->type);
     // TODO: Handle if res == "error"
@@ -34,5 +26,6 @@ void PhSensor::sendSensorLog() {
 void PhSensor::getRange() {
     char *data = "/range";
     char *response = getData(strcat(this->type, data));
+
     // TODO: Parse response and update this->maxPh and this->minPh
 }

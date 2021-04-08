@@ -19,8 +19,6 @@ class PhSensor: public PiWrapper {
     void getReading();
     // Check if ph reading is above range
     bool aboveRange();
-    // Check if ph reading below range
-    bool belowRange();
     // Send latest sensor reading to pi via wrapper
     void sendSensorLog();
     // Gets pH range from pi via wrapper
