@@ -5,10 +5,12 @@
 class PhSensor: public PiWrapper {
     // Inherits from PiWrapper for interacting with pi
     public:
-    char *type = "ph";
+    PiWrapper* wrapper = new PiWrapper();
+    String type = "ph";
+    long lastReading;
     double ph;
     double maxPh = 7;
-    int interval;
+    int interval = 120;
     uint8_t pin;
 
     // Constructor
@@ -20,9 +22,9 @@ class PhSensor: public PiWrapper {
     bool aboveRange();
     // Send latest sensor reading to pi via wrapper
     void sendSensorLog();
-    // Gets pH range from pi via wrapper
-    // Updates: maxPh and minPh data members
-    void getRange();
+    // Gets max pH from pi via wrapper
+    // Updates: maxPh data member
+    void getMaxPh();
     // Get dispense interval from pi via wrapper
     // Updates: interval data member
     void getInterval();

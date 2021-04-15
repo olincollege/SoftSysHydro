@@ -2,15 +2,17 @@
 #define PIWRAPPER_H
 #include <Arduino.h>
 
+
 class PiWrapper {
     public:
-    char *port = "/dev/ttyACM0";
+    String port = "/dev/ttyACM0";
+    String systemId = "system/1";
     // Send data to the pi
-    static char* sendData(int data, char* type);
+    static String sendData(double data, String type);
     // Send data to the pi
-    static char* sendData(char* data, char* type);
+    static String sendData(String data, String type);
     // Get data from the pi
-    static char* getData(char* request);
+    static String getData(String request, String type);
 };
 
 #endif

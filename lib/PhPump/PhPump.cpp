@@ -1,5 +1,9 @@
 #include "PhPump.h"
 
+PhPump::PhPump(uint8_t analogPin) {
+    this-> pin = analogPin;
+}
+
 void PhPump::dispense() {
     // TODO:
     // Interface with pump
@@ -8,11 +12,13 @@ void PhPump::dispense() {
 };
 
 void PhPump::sendLog() {
-    char *res = sendData(this->lastDispense, this->type);
+    String res = sendData(this->lastDispense, this->type);
     // TODO: Handle error
 };
 
 void PhPump::getInterval() {
-    String response = getData(this->interval_req);
-    // TODO: parse response and update interval data member
+    String response = getData(this->wrapper->systemId, "check_ec_ph_interval");
+    if (response != "") {
+        this->interval = response.toInt();
+    }
 };

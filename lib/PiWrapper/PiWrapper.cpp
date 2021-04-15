@@ -1,18 +1,18 @@
 #include "PiWrapper.h"
 
-char* PiWrapper::sendData(int data, char* type) {
-    char reqType[] = ":post:";
+String PiWrapper::sendData(double data, String type) {
+    String reqType = ":post:";
     Serial.print(type);
     Serial.print(reqType);
     Serial.print(data);
-    Serial.print("\n");
+    Serial.print("|||");
     unsigned long StartTime = millis();
-    char response[] = "waiting";
+    String response = "";
     while (true){
         unsigned long CurrentTime = millis();
         unsigned long ElapsedTime = CurrentTime - StartTime;
         if (Serial.available() > 0){
-            Serial.readStringUntil('\n').toCharArray(response, 50);
+            response = Serial.readStringUntil('|||');
             break;
         } else if (ElapsedTime > 5000){
             break;
@@ -21,19 +21,19 @@ char* PiWrapper::sendData(int data, char* type) {
     return response;
 }
 
-char* PiWrapper::sendData(char* data, char* type) {
-    char *reqType = ":post:";
+String PiWrapper::sendData(String data, String type) {
+    String reqType = ":post:";
     Serial.print(type);
     Serial.print(reqType);
     Serial.print(data);
-    Serial.print("\n");
+    Serial.print("|||");
     unsigned long StartTime = millis();
-    char response[] = "waiting";
+    String response = "";
     while (true){
         unsigned long CurrentTime = millis();
         unsigned long ElapsedTime = CurrentTime - StartTime;
         if (Serial.available() > 0){
-            Serial.readStringUntil('\n').toCharArray(response, 50);
+            response = Serial.readStringUntil('|||');
             break;
         } else if (ElapsedTime > 5000){
             break;
@@ -42,18 +42,19 @@ char* PiWrapper::sendData(char* data, char* type) {
     return response;
 }
 
-char* PiWrapper::getData(char* request) {
-    char reqType[] = ":get:";
+String PiWrapper::getData(String request, String type) {
+    String reqType = ":get:";
+    Serial.print(type);
     Serial.print(reqType);
     Serial.print(request);
-    Serial.print("\n");
-    char response[] = "waiting";
+    Serial.print("|||");
+    String response = "";
     unsigned long StartTime = millis();
     while (true){
         unsigned long CurrentTime = millis();
         unsigned long ElapsedTime = CurrentTime - StartTime;
         if (Serial.available() > 0){
-            Serial.readStringUntil('\n').toCharArray(response, 50);
+            response = Serial.readStringUntil('|||');
             break;
         } else if (ElapsedTime > 5000){
             break;

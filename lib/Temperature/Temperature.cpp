@@ -18,5 +18,12 @@ void Temperature::getTemp() {
 
 void Temperature::sendSensorLog() {
     getTemp();
-    char *res = sendData(this->temperature, this->type);
+    String res = sendData(this->temperature, this->type);
+}
+
+void Temperature::getInterval() {
+    String response = getData(this->wrapper->systemId, "sensor_interval");
+    if (response != "") {
+        this->interval = response.toInt();
+    }
 }

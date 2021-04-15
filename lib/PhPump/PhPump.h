@@ -5,11 +5,14 @@
 class PhPump: public PiWrapper {
     // Inherits from PiWrapper for interacting with pi
     public:
-    char* lastDispense;
-    int interval;
-    char *type = "ph_down";
-    char *interval_req = "ph/interval";
+    PiWrapper* wrapper = new PiWrapper();
+    long lastDispense;
+    int interval = 1200;
+    String type = "ph_down";
+    uint8_t pin;
 
+    // Constructor
+    PhPump(uint8_t analogPin);
     // Dispense pH up solution for a set amount of time
     // Updates lastDispense data member
     void dispense();

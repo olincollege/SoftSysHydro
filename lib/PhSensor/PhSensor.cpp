@@ -2,7 +2,7 @@
 #include <ph_grav.h>
 
 PhSensor::PhSensor(uint8_t analogPin) {
-    this-> pin = A0;
+    this-> pin = analogPin;
 }
 
 void PhSensor::getReading() {
@@ -11,6 +11,7 @@ void PhSensor::getReading() {
 }
 
 bool PhSensor::aboveRange() {
+    getReading();
     if (this->ph > this->maxPh) {
         return true;
     } else {
@@ -19,13 +20,21 @@ bool PhSensor::aboveRange() {
 }
 
 void PhSensor::sendSensorLog() {
-    char *res = sendData(this->ph, this->type);
+    getReading();
+    String res = sendData(this->ph, this->type);
     // TODO: Handle if res == "error"
 }
 
-void PhSensor::getRange() {
-    char *data = "/range";
-    char *response = getData(strcat(this->type, data));
+void PhSensor::getMaxPh() {
+    String response = getData(this->wrapper->systemId, "ph_high");
+    if (response != "") {
+        this->maxPh = response.toInt();
+    }
+}
 
-    // TODO: Parse response and update this->maxPh and this->minPh
+void PhSensor::getInterval() {
+    String response = getData(this->wrapper->systemId, "sensor_interval");
+    if (response != "") {
+        this->interval = response.toInt();
+    }
 }
