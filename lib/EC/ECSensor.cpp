@@ -2,7 +2,7 @@
 #include "Arduino.h"
 
 ECSensor::ECSensor() {
-
+    ;
 }
 
 void ECSensor::getReading() {
@@ -13,4 +13,18 @@ void ECSensor::getReading() {
 void ECSensor::sendSensorLog() {
     getReading();
     String res = sendData(this -> reading, this -> type);
+}
+
+void ECSensor::getMinEC() {
+    String response = getData(this->wrapper->systemId, "ec_low");
+    if (response != "") {
+        this->minEC = response.toDouble();
+    }
+}
+
+void ECSensor::getInterval() {
+    String response = getData(this->wrapper->systemId, "sensor_interval");
+    if (response != "") {
+        this->interval = response.toInt();
+    }
 }

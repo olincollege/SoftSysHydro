@@ -5,47 +5,70 @@
 #include <Temperature.h>
 #include <ECSensor.h>
 PhSensor phSensor(A0);
-Gravity_pH grav_ph_sensor(A0);
+PhPump phPump(A2);
 Temperature temperature(A1);
 ECSensor ecSensor;
+long getParamsInterval = 3600;
+long lastGetParams;
 
-void setup() {
-  Serial.begin(9600);
-  Serial3.begin(9600);
-  unsigned long startTime = millis()/1000;
-  PhSensor phSensor(A0);
+unsigned long seconds()
+{
+  return millis() / 1000;
+}
+
+void updateParams()
+{
+  ecSensor.getInterval();
+  ecSensor.getMinEC();
+  temperature.getInterval();
+  phPump.getInterval();
   phSensor.getInterval();
   phSensor.getMaxPh();
-  phSensor.lastReading = startTime;
-  PhPump phPump(A1);
-  phPump.lastDispense = startTime;
-  phPump.getInterval();
-  Temperature temperature(A2);
-  temperature.lastReading = startTime;
-  temperature.getInterval();
-  
-  while (true) {
-    delay(5000);
+  lastGetParams = seconds();
+}
 
-    ecSensor.sendSensorLog();
+void setup()
+{
+  Serial.begin(9600);
+  Serial3.begin(9600);
+  phSensor.lastReading = seconds();
+  phPump.lastDispense = seconds();
+  temperature.lastReading = seconds();
+  ecSensor.lastReading = seconds();
+  updateParams();
+}
 
-    unsigned long elapsedSeconds = millis()/1000;
-    if (elapsedSeconds-phSensor.lastReading > phSensor.interval) {
-        phSensor.sendSensorLog();
-        phSensor.lastReading = millis()/1000;
-    }
-    if (elapsedSeconds-temperature.lastReading > temperature.interval) {
-        temperature.sendSensorLog();
-        temperature.lastReading = millis()/1000;
-    }
-    if (elapsedSeconds-phPump.lastDispense > phPump.interval) {
-        if (phSensor.aboveRange()) {
-            phPump.dispense();
-            phPump.sendLog();
-        }
-        phPump.lastDispense = millis()/1000;
-    }
+void loop()
+{
+  delay(5000);
+
+  unsigned long elapsedSeconds = seconds();
+  if (elapsedSeconds - phSensor.lastReading > phSensor.interval)
+  {
+    phSensor.sendSensorLog();
+    phSensor.lastReading = seconds();
   }
-
-
+  if (elapsedSeconds - temperature.lastReading > temperature.interval)
+  {
+    temperature.sendSensorLog();
+    temperature.lastReading = seconds();
+  }
+  if (elapsedSeconds - phPump.lastDispense > phPump.interval)
+  {
+    if (phSensor.aboveRange())
+    {
+      phPump.dispense();
+      phPump.sendLog();
+    }
+    phPump.lastDispense = seconds();
+  }
+  if (elapsedSeconds - ecSensor.lastReading > ecSensor.interval)
+  {
+    ecSensor.sendSensorLog();
+    ecSensor.lastReading = seconds();
+  }
+  if (elapsedSeconds - lastGetParams > getParamsInterval)
+  {
+    updateParams();
+  }
 }

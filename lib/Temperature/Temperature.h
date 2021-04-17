@@ -10,7 +10,7 @@ class Temperature: public PiWrapper {
     double resistance;
     double voltage;
     double temperature;
-    int interval = 1200;
+    int interval = 120;
     long lastReading;
     uint8_t pin;
     String type = "temp";

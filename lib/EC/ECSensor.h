@@ -7,10 +7,16 @@ class ECSensor: public PiWrapper {
     PiWrapper* wrapper = new PiWrapper();
     String type = "ec";
     String reading;
+    long lastReading;
+    int interval = 1200;
+    double minEC = 1.5; // TODO: update this to a reasonable value
+
     
     ECSensor();
     void getReading();
     void sendSensorLog();
+    void getInterval();
+    void getMinEC();
 };
 
 #endif
