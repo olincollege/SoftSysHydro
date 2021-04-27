@@ -1,5 +1,8 @@
 #include "PiWrapper.h"
 
+unsigned long timeout = 5000;
+
+
 String PiWrapper::sendData(double data, String type) {
     String reqType = ":post:";
     Serial.print(type);
@@ -14,7 +17,7 @@ String PiWrapper::sendData(double data, String type) {
         if (Serial.available() > 0){
             response = Serial.readStringUntil('|||');
             break;
-        } else if (ElapsedTime > 5000){
+        } else if (ElapsedTime > timeout){
             break;
         }
     }
@@ -35,7 +38,7 @@ String PiWrapper::sendData(String data, String type) {
         if (Serial.available() > 0){
             response = Serial.readStringUntil('|||');
             break;
-        } else if (ElapsedTime > 5000){
+        } else if (ElapsedTime > timeout){
             break;
         }
     }
@@ -56,7 +59,7 @@ String PiWrapper::getData(String request, String type) {
         if (Serial.available() > 0){
             response = Serial.readStringUntil('|||');
             break;
-        } else if (ElapsedTime > 5000){
+        } else if (ElapsedTime > timeout){
             break;
         }
     }

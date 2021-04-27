@@ -10,7 +10,7 @@ class PhSensor: public PiWrapper {
     long lastReading;
     double ph;
     double maxPh = 7;
-    int interval = 120;
+    long interval = 120;
     uint8_t pin;
 
     // Constructor

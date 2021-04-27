@@ -7,7 +7,7 @@ class PhPump: public PiWrapper {
     public:
     PiWrapper* wrapper = new PiWrapper();
     long lastDispense;
-    int interval = 1200;
+    long interval = 1200;
     String type = "ph_down";
     uint8_t pin;
 

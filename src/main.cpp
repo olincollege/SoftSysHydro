@@ -4,6 +4,7 @@
 #include <ph_grav.h>
 #include <Temperature.h>
 #include <ECSensor.h>
+
 PhSensor phSensor(A0);
 PhPump phPump(A2);
 Temperature temperature(A1);
@@ -30,7 +31,8 @@ void updateParams()
 void setup()
 {
   Serial.begin(9600);
-  Serial3.begin(9600);
+  delay(1000);
+  //Serial3.begin(9600);
   phSensor.lastReading = seconds();
   phPump.lastDispense = seconds();
   temperature.lastReading = seconds();
@@ -41,7 +43,6 @@ void setup()
 void loop()
 {
   delay(5000);
-
   unsigned long elapsedSeconds = seconds();
   if (elapsedSeconds - phSensor.lastReading > phSensor.interval)
   {
@@ -64,7 +65,8 @@ void loop()
   }
   if (elapsedSeconds - ecSensor.lastReading > ecSensor.interval)
   {
-    ecSensor.sendSensorLog();
+    //ecSensor.sendSensorLog();
+    ecSensor.getInterval();
     ecSensor.lastReading = seconds();
   }
   if (elapsedSeconds - lastGetParams > getParamsInterval)

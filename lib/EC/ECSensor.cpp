@@ -25,6 +25,7 @@ void ECSensor::getMinEC() {
 void ECSensor::getInterval() {
     String response = getData(this->wrapper->systemId, "sensor_interval");
     if (response != "") {
-        this->interval = response.toInt();
+        int intervalInt = response.toInt();
+        this->interval = long(intervalInt);
     }
 }

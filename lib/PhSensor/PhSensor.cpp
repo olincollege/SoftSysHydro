@@ -28,13 +28,14 @@ void PhSensor::sendSensorLog() {
 void PhSensor::getMaxPh() {
     String response = getData(this->wrapper->systemId, "ph_high");
     if (response != "") {
-        this->maxPh = response.toInt();
+        this->maxPh = response.toDouble();
     }
 }
 
 void PhSensor::getInterval() {
     String response = getData(this->wrapper->systemId, "sensor_interval");
     if (response != "") {
-        this->interval = response.toInt();
+        int intervalInt = response.toInt();
+        this->interval = long(intervalInt);
     }
 }

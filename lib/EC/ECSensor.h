@@ -8,7 +8,7 @@ class ECSensor: public PiWrapper {
     String type = "ec";
     String reading;
     long lastReading;
-    int interval = 1200;
+    long interval = 120;
     double minEC = 1.5; // TODO: update this to a reasonable value
 
     
