@@ -22,7 +22,6 @@ bool PhSensor::aboveRange() {
 void PhSensor::sendSensorLog() {
     getReading();
     String res = sendData(this->ph, this->type);
-    // TODO: Handle if res == "error"
 }
 
 void PhSensor::getMaxPh() {
