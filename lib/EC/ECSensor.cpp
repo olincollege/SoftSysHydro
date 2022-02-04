@@ -5,9 +5,15 @@ ECSensor::ECSensor() {
     ;
 }
 
+bool ECSensor::aboveRange() {
+    this->getReading();
+    return this->reading > this->minEC;
+}
+
 void ECSensor::getReading() {
-    this -> reading.reserve(30);
-    this -> reading = Serial3.readStringUntil(13);
+    //this -> reading.reserve(30);
+    //this -> reading = Serial3.readStringUntil(13);
+    this -> reading = 1.56;
 }
 
 void ECSensor::sendSensorLog() {

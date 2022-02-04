@@ -24,3 +24,11 @@ void PhPump::getInterval() {
         this->interval = long(intervalInt);
     }
 }
+
+void PhPump::getDispenseTime() {
+    String response = getData(this->wrapper->systemId, "ph_dispense_time");
+    if (response != "") {
+        int dispTime = response.toInt();
+        this->dispenseTime = long(dispTime);
+    }
+}

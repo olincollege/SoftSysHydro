@@ -2,66 +2,42 @@
 
 unsigned long timeout = 5000;
 
-
-String PiWrapper::sendData(double data, String type) {
-    String reqType = ":post:";
-    Serial.print(type);
-    Serial.print(reqType);
-    Serial.print(data);
-    Serial.print("|||");
+String getResponse() {
     unsigned long StartTime = millis();
     String response = "";
     while (true){
         unsigned long CurrentTime = millis();
         unsigned long ElapsedTime = CurrentTime - StartTime;
         if (Serial.available() > 0){
-            response = Serial.readStringUntil('|||');
+            response = Serial.readString();
             break;
         } else if (ElapsedTime > timeout){
             break;
         }
     }
     return response;
+}
+
+String PiWrapper::sendData(double data, String type) {
+    String reqType = ":post:";
+    Serial.print(type);
+    Serial.print(reqType);
+    Serial.println(data);
+    return getResponse();
 }
 
 String PiWrapper::sendData(String data, String type) {
     String reqType = ":post:";
     Serial.print(type);
     Serial.print(reqType);
-    Serial.print(data);
-    Serial.print("|||");
-    unsigned long StartTime = millis();
-    String response = "";
-    while (true){
-        unsigned long CurrentTime = millis();
-        unsigned long ElapsedTime = CurrentTime - StartTime;
-        if (Serial.available() > 0){
-            response = Serial.readStringUntil('|||');
-            break;
-        } else if (ElapsedTime > timeout){
-            break;
-        }
-    }
-    return response;
+    Serial.println(data);
+    return getResponse();
 }
 
 String PiWrapper::getData(String request, String type) {
     String reqType = ":get:";
     Serial.print(type);
     Serial.print(reqType);
-    Serial.print(request);
-    Serial.print("|||");
-    String response = "";
-    unsigned long StartTime = millis();
-    while (true){
-        unsigned long CurrentTime = millis();
-        unsigned long ElapsedTime = CurrentTime - StartTime;
-        if (Serial.available() > 0){
-            response = Serial.readStringUntil('|||');
-            break;
-        } else if (ElapsedTime > timeout){
-            break;
-        }
-    }
-    return response;
+    Serial.println(request);
+    return getResponse();
 }
