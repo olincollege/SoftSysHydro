@@ -3,7 +3,7 @@
 
 EcSensor::EcSensor()
 {
-  static Ezo_uart Module(Serial3, "EC");
+  static Ezo_uart Module(Serial3);
   module = &Module;
 }
 
@@ -20,13 +20,14 @@ bool EcSensor::isBelowRange()
 
 void EcSensor::sendSensorLog()
 {
-  query = createQuery("post", ec, type);
-  sendQuery(query);
+  createQuery("post", ec, type);
+  sendQuery();
 }
 
 void EcSensor::getMinEc()
 {
-  query = createQuery("get", systemId, "ec_low");
+  createQuery("get", systemId, "ec_low");
+  sendQuery();
   String response = getResponse();
   if (response != "")
   {
@@ -36,7 +37,8 @@ void EcSensor::getMinEc()
 
 void EcSensor::getInterval()
 {
-  query = createQuery("get", systemId, "sensor_interval");
+  createQuery("get", systemId, "sensor_interval");
+  sendQuery();
   String response = getResponse();
   if (response != "")
   {

@@ -19,25 +19,29 @@ void setup()
   Serial3.begin(9600);
   delay(1000);
   phSensor.lastReading = seconds();
-  Serial.println("Setup complete");
+  ecSensor.lastReading = seconds();
+  phSensor.interval = 10;
+  ecSensor.interval = 10;
 }
 
 void loop()
 {
-  delay(5000);
-  Serial.println("test");
-  while (true)
-  {
-    ecSensor.getReading();
-    Serial.println(ecSensor.ec);
-    delay(3000);
-  }
+  delay(3000);
   unsigned long elapsedSeconds = seconds();
   // If enough time has elapsed since the last reading
   // then take a sensor reading and reset lastReading
   if (elapsedSeconds - phSensor.lastReading > phSensor.interval)
   {
+    phSensor.getReading();
     phSensor.sendSensorLog();
     phSensor.lastReading = seconds();
+    delay(5000);
+  }
+  if (elapsedSeconds - ecSensor.lastReading > ecSensor.interval)
+  {
+    ecSensor.getReading();
+    ecSensor.sendSensorLog();
+    ecSensor.lastReading = seconds();
+    delay(5000);
   }
 }

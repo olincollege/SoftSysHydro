@@ -6,9 +6,9 @@ String PiWrapper::getResponse()
     String response = "";
     while (true)
     {
-        if (this->serial.available() > 0)
+        if (Serial.available() > 0)
         {
-            response = this->serial.readString();
+            response = Serial.readString();
             break;
         }
         else if (hasTimedOut(startTime))
@@ -23,17 +23,17 @@ bool PiWrapper::hasTimedOut(unsigned long startTime)
     return elapsedTime >= this->timeout;
 }
 
-String PiWrapper::createQuery(String reqType, String data, String type)
+void PiWrapper::createQuery(String reqType, String data, String type)
 {
-    return type + ":" + reqType + ":" + data + "\n";
+    query = type + sep + reqType + sep + data;
 }
 
-String PiWrapper::createQuery(String reqType, double data, String type)
+void PiWrapper::createQuery(String reqType, float data, String type)
 {
-    return type + ":" + reqType + ":" + data + "\n";
+    query = type + sep + reqType + sep + data;
 }
 
-void PiWrapper::sendQuery(String query)
+void PiWrapper::sendQuery()
 {
-    this->serial.print(query);
+    Serial.println(query);
 }

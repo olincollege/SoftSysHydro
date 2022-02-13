@@ -5,14 +5,14 @@ PiWrapper wrapper = PiWrapper();
 
 void test_create_query_str()
 {
-  String q = wrapper.createQuery("req", "data", "type");
-  TEST_ASSERT(q == "type:req:data\n");
+  wrapper.createQuery("req", "data", "type");
+  TEST_ASSERT(wrapper.query == "type:req:data");
 }
 
 void test_create_query_dbl()
 {
-  String q = wrapper.createQuery("req", 1.11, "type");
-  TEST_ASSERT(q == "type:req:1.11\n");
+  wrapper.createQuery("req", 1.11, "type");
+  TEST_ASSERT(wrapper.query == "type:req:1.11");
 }
 
 void test_has_timed_out_true()

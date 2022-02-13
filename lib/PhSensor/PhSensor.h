@@ -4,14 +4,12 @@
 
 class PhSensor : public PiWrapper
 {
-    // Inherits from PiWrapper for interacting with pi
 public:
     const String type = "ph";
-    String query = "";
     unsigned long lastReading;
-    double ph = 0.0;
-    double maxPh = 7;
-    long interval = 120;
+    float ph = 0.0;
+    float maxPh = 7;
+    unsigned long interval = 120;
     uint8_t pin;
     // Constructor
     PhSensor(uint8_t analogPin);

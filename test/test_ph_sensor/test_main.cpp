@@ -22,21 +22,21 @@ void test_send_sensor_log()
 {
     phSensor.ph = 1.10;
     phSensor.sendSensorLog();
-    TEST_ASSERT(phSensor.query == "ph:post:1.10\n")
+    TEST_ASSERT(phSensor.query == "ph:post:1.10")
 }
 
 void test_get_interval()
 {
     phSensor.timeout = 0;
     phSensor.getInterval();
-    TEST_ASSERT(phSensor.query == "sensor_interval:get:system/1\n")
+    TEST_ASSERT(phSensor.query == "sensor_interval:get:system/1")
 }
 
 void test_get_max_ph()
 {
     phSensor.timeout = 0;
     phSensor.getMaxPh();
-    TEST_ASSERT(phSensor.query == "ph_high:get:system/1\n")
+    TEST_ASSERT(phSensor.query == "ph_high:get:system/1")
 }
 
 void setup()

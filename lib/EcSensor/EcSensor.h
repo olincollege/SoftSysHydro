@@ -7,9 +7,8 @@ class EcSensor : public PiWrapper
 {
 public:
   float ec = 0.0;
-  int interval = 120;
+  unsigned long interval = 120;
   String type = "ec";
-  String query = "";
   unsigned long lastReading;
   float minEc = 200;
   EcSensor();
