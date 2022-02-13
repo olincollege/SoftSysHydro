@@ -1,43 +1,31 @@
 #include "PiWrapper.h"
 
-unsigned long timeout = 5000;
 
-String getResponse() {
-    unsigned long StartTime = millis();
+String PiWrapper::getResponse() {
+    unsigned long startTime = millis();
     String response = "";
-    while (true){
-        unsigned long CurrentTime = millis();
-        unsigned long ElapsedTime = CurrentTime - StartTime;
-        if (Serial.available() > 0){
-            response = Serial.readString();
+    while (true){        
+        if (this->serial.available() > 0){
+            response = this->serial.readString();
             break;
-        } else if (ElapsedTime > timeout){
-            break;
-        }
+        } else if (hasTimedOut(startTime)) break;
     }
     return response;
 }
 
-String PiWrapper::sendData(double data, String type) {
-    String reqType = ":post:";
-    Serial.print(type);
-    Serial.print(reqType);
-    Serial.println(data);
-    return getResponse();
+bool PiWrapper::hasTimedOut(unsigned long startTime){
+    unsigned long elapsedTime = millis() - startTime;
+    return elapsedTime >= this->timeout;
 }
 
-String PiWrapper::sendData(String data, String type) {
-    String reqType = ":post:";
-    Serial.print(type);
-    Serial.print(reqType);
-    Serial.println(data);
-    return getResponse();
+String PiWrapper::createQuery(String reqType, String data, String type) {
+    return type + ":" + reqType + ":" + data + "\n";
 }
 
-String PiWrapper::getData(String request, String type) {
-    String reqType = ":get:";
-    Serial.print(type);
-    Serial.print(reqType);
-    Serial.println(request);
-    return getResponse();
+String PiWrapper::createQuery(String reqType, double data, String type) {
+    return type + ":" + reqType + ":" + data + "\n";
+}
+
+void PiWrapper::sendQuery(String query) {
+    this->serial.print(query);
 }

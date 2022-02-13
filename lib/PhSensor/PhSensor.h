@@ -5,21 +5,20 @@
 class PhSensor: public PiWrapper {
     // Inherits from PiWrapper for interacting with pi
     public:
-    PiWrapper* wrapper = new PiWrapper();
-    String type = "ph";
-    long lastReading;
+    const String type = "ph";
+    String query = "";
+    unsigned long lastReading;
     double ph;
     double maxPh = 7;
     long interval = 120;
     uint8_t pin;
-
     // Constructor
     PhSensor(uint8_t analogPin);
     // Get pH readings from sensor
     // Updates: ph data member
     void getReading();
     // Check if ph reading is above range
-    bool aboveRange();
+    bool isAboveRange();
     // Send latest sensor reading to pi via wrapper
     void sendSensorLog();
     // Gets max pH from pi via wrapper
