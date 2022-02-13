@@ -3,7 +3,7 @@
 
 // Create ph sensor object
 PhSensor phSensor(A0);
-EcSensor ecSensor(Serial3);
+EcSensor ecSensor; // Constructs on Serial3
 
 // Returns the time since the arduino has been powered
 // on in units of seconds
@@ -26,9 +26,12 @@ void loop()
 {
   delay(5000);
   Serial.println("test");
-  ecSensor.getReading();
-  Serial.println(ecSensor.ec);
-  delay(10000000);
+  while (true)
+  {
+    ecSensor.getReading();
+    Serial.println(ecSensor.ec);
+    delay(3000);
+  }
   unsigned long elapsedSeconds = seconds();
   // If enough time has elapsed since the last reading
   // then take a sensor reading and reset lastReading

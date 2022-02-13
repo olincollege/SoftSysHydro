@@ -2,13 +2,14 @@
 #define PHSENSOR_H
 #include "PiWrapper.h"
 
-class PhSensor: public PiWrapper {
+class PhSensor : public PiWrapper
+{
     // Inherits from PiWrapper for interacting with pi
-    public:
+public:
     const String type = "ph";
     String query = "";
     unsigned long lastReading;
-    double ph;
+    double ph = 0.0;
     double maxPh = 7;
     long interval = 120;
     uint8_t pin;

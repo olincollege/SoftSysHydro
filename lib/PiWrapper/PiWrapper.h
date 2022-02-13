@@ -2,9 +2,9 @@
 #define PIWRAPPER_H
 #include <Arduino.h>
 
-
-class PiWrapper {
-    public:
+class PiWrapper
+{
+public:
     String port = "/dev/ttyACM0";
     String systemId = "system/1";
     HardwareSerial serial = Serial;

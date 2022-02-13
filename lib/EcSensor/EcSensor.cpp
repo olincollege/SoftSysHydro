@@ -1,40 +1,46 @@
 #include <Ezo_uart.h>
 #include "EcSensor.h"
 
-EcSensor::EcSensor(HardwareSerial serial) {
-  static Ezo_uart Module(serial, "EC");
-  this->module = &Module;
+EcSensor::EcSensor()
+{
+  static Ezo_uart Module(Serial3, "EC");
+  module = &Module;
 }
 
-void EcSensor::getReading() {
-  Serial.println("Getting reading");
-  this->module->send_read();
-  Serial.println("sent");
-  ec = this->module->get_reading();
+void EcSensor::getReading()
+{
+  module->send_read();
+  ec = module->get_reading();
 }
 
-bool EcSensor::belowRange() {
-  return this->ec < this->minEc;
+bool EcSensor::isBelowRange()
+{
+  return ec < minEc;
 }
 
-void EcSensor::sendSensorLog() {
-  String query = createQuery("post", this->ec, this->type);
+void EcSensor::sendSensorLog()
+{
+  query = createQuery("post", ec, type);
   sendQuery(query);
 }
 
-void EcSensor::getMinEc() {
-  String query = createQuery("get", this->systemId, "ec_low");
+void EcSensor::getMinEc()
+{
+  query = createQuery("get", systemId, "ec_low");
   String response = getResponse();
-  if (response != "") {
-      this->minEc = response.toDouble();
+  if (response != "")
+  {
+    minEc = response.toDouble();
   }
 }
 
-void EcSensor::getInterval() {
-  String query = createQuery("get", this->systemId, "sensor_interval");
+void EcSensor::getInterval()
+{
+  query = createQuery("get", systemId, "sensor_interval");
   String response = getResponse();
-  if (response != "") {
-      int intervalInt = response.toInt();
-      this->interval = long(intervalInt);
+  if (response != "")
+  {
+    int intervalInt = response.toInt();
+    interval = long(intervalInt);
   }
 }

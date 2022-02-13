@@ -3,19 +3,21 @@
 #include "PiWrapper.h"
 #include <Ezo_uart.h>
 
-class EcSensor: public PiWrapper {
-  public:
+class EcSensor : public PiWrapper
+{
+public:
   float ec = 0.0;
   int interval = 120;
   String type = "ec";
+  String query = "";
   unsigned long lastReading;
   float minEc = 200;
-  EcSensor(HardwareSerial serial);
-  Ezo_uart * module;
+  EcSensor();
+  Ezo_uart *module;
   // Get a reading and update ec
   void getReading();
   // Check if ec reading is above range
-  bool belowRange();
+  bool isBelowRange();
   // Send latest sensor reading to pi via wrapper
   void sendSensorLog();
   // Gets max EC from pi via wrapper
