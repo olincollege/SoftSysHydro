@@ -2,24 +2,22 @@
 #define PHSENSOR_H
 #include "PiWrapper.h"
 
-class PhSensor: public PiWrapper {
-    // Inherits from PiWrapper for interacting with pi
-    public:
-    PiWrapper* wrapper = new PiWrapper();
-    String type = "ph";
-    long lastReading;
-    double ph;
-    double maxPh = 7;
-    long interval = 120;
+class PhSensor : public PiWrapper
+{
+public:
+    const String type = "ph";
+    unsigned long lastReading;
+    float ph = 0.0;
+    float maxPh = 7;
+    unsigned long interval = 120;
     uint8_t pin;
-
     // Constructor
     PhSensor(uint8_t analogPin);
     // Get pH readings from sensor
     // Updates: ph data member
     void getReading();
     // Check if ph reading is above range
-    bool aboveRange();
+    bool isAboveRange();
     // Send latest sensor reading to pi via wrapper
     void sendSensorLog();
     // Gets max pH from pi via wrapper

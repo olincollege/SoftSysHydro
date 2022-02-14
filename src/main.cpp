@@ -1,92 +1,47 @@
-#include <Arduino.h>
 #include <PhSensor.h>
-#include <PhPump.h>
-#include <ph_grav.h>
-#include <Temperature.h>
-#include <ECSensor.h>
-#include <EcPump.h>
+#include <EcSensor.h>
 
+// Create ph sensor object
 PhSensor phSensor(A0);
-PhPump phPump(A2);
-Temperature temperature(A1);
-ECSensor ecSensor;
-EcPump ecPump(A3, A4, A5);
-long getParamsInterval = 3600;
-long lastGetParams;
+EcSensor ecSensor; // Constructs on Serial3
 
+// Returns the time since the arduino has been powered
+// on in units of seconds
 unsigned long seconds()
 {
   long divisor = 1000;
   return millis() / divisor;
 }
 
-void updateParams()
-{
-  ecSensor.getInterval();
-  ecSensor.getMinEC();
-  temperature.getInterval();
-  phPump.getInterval();
-  phPump.getDispenseTime();
-  phSensor.getInterval();
-  phSensor.getMaxPh();
-  ecPump.getInterval();
-  ecPump.getDispenseTime();
-  lastGetParams = seconds();
-}
-
 void setup()
 {
   Serial.begin(9600);
+  Serial3.begin(9600);
   delay(1000);
-  //Serial3.begin(9600);
   phSensor.lastReading = seconds();
-  phPump.lastDispense = seconds();
-  temperature.lastReading = seconds();
   ecSensor.lastReading = seconds();
-  updateParams();
+  phSensor.interval = 10;
+  ecSensor.interval = 10;
 }
 
 void loop()
 {
-  delay(5000);
-  
+  delay(3000);
   unsigned long elapsedSeconds = seconds();
+  // If enough time has elapsed since the last reading
+  // then take a sensor reading and reset lastReading
   if (elapsedSeconds - phSensor.lastReading > phSensor.interval)
   {
+    phSensor.getReading();
     phSensor.sendSensorLog();
     phSensor.lastReading = seconds();
-  }
-  if (elapsedSeconds - temperature.lastReading > temperature.interval)
-  {
-    temperature.sendSensorLog();
-    temperature.lastReading = seconds();
-  }
-  if (elapsedSeconds - phPump.lastDispense > phPump.interval)
-  {
-    if (phSensor.aboveRange())
-    {
-      phPump.dispense();
-      phPump.sendLog();
-    }
-    phPump.lastDispense = seconds();
-  }
-  if (elapsedSeconds - phPump.lastDispense > phPump.interval)
-  {
-    if (ecSensor.aboveRange()) {
-      ecPump.dispense();
-      ecPump.sendLog();
-    }
-    ecPump.lastDispense = seconds();
+    delay(5000);
   }
   if (elapsedSeconds - ecSensor.lastReading > ecSensor.interval)
   {
+    ecSensor.getReading();
     ecSensor.sendSensorLog();
-    ecSensor.getInterval();
     ecSensor.lastReading = seconds();
-  }
-  if (elapsedSeconds - lastGetParams > getParamsInterval)
-  {
-    updateParams();
-    lastGetParams = seconds();
+    delay(5000);
   }
 }

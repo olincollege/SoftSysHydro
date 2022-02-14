@@ -1,40 +1,54 @@
 #include "PhSensor.h"
-#include <ph_grav.h>
+#include "ph_grav.h"
 
-PhSensor::PhSensor(uint8_t analogPin) {
-    this-> pin = analogPin;
+PhSensor::PhSensor(uint8_t analogPin)
+{
+    pin = analogPin;
 }
 
-void PhSensor::getReading() {
-    Gravity_pH pH = this->pin; //Assigns pin for pH signal
-    this -> ph = pH.read_ph();
+void PhSensor::getReading()
+{
+    Gravity_pH pH = pin; // Assigns pin for pH signal
+    ph = pH.read_ph();
 }
 
-bool PhSensor::aboveRange() {
-    getReading();
-    if (this->ph > this->maxPh) {
+bool PhSensor::isAboveRange()
+{
+    if (ph > maxPh)
+    {
         return true;
-    } else {
+    }
+    else
+    {
         return false;
     };
 }
 
-void PhSensor::sendSensorLog() {
-    getReading();
-    String res = sendData(this->ph, this->type);
+void PhSensor::sendSensorLog()
+{
+    createQuery("post", ph, type);
+    sendQuery();
 }
 
-void PhSensor::getMaxPh() {
-    String response = getData(this->wrapper->systemId, "ph_high");
-    if (response != "") {
-        this->maxPh = response.toDouble();
+void PhSensor::getMaxPh()
+{
+    createQuery("get", systemId, "ph_high");
+    sendQuery();
+    String response = getResponse();
+    if (response != "")
+    {
+        maxPh = response.toDouble();
     }
 }
 
-void PhSensor::getInterval() {
-    String response = getData(this->wrapper->systemId, "sensor_interval");
-    if (response != "") {
+void PhSensor::getInterval()
+{
+    createQuery("get", systemId, "sensor_interval");
+    sendQuery();
+    String response = getResponse();
+    if (response != "")
+    {
         int intervalInt = response.toInt();
-        this->interval = long(intervalInt);
+        interval = long(intervalInt);
     }
 }
