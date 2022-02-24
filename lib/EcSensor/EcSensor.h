@@ -7,9 +7,9 @@ class EcSensor : public PiWrapper
 {
 public:
   float ec = 0.0;
-  unsigned long interval = 120;
+  unsigned int interval = 120;
   String type = "ec";
-  unsigned long lastReading;
+  DateTime lastReading;
   float minEc = 200;
   EcSensor();
   Ezo_uart *module;
