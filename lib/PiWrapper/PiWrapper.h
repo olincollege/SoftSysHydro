@@ -1,6 +1,7 @@
 #ifndef PIWRAPPER_H
 #define PIWRAPPER_H
 #include <Arduino.h>
+#include <RTClib.h>
 
 class PiWrapper
 {

@@ -1,47 +1,55 @@
-#include <PhSensor.h>
-#include <EcSensor.h>
+#include "PhSensor.h"
+#include "EcSensor.h"
+#include <RTClib.h>
 
 // Create ph sensor object
 PhSensor phSensor(A0);
 EcSensor ecSensor; // Constructs on Serial3
-
-// Returns the time since the arduino has been powered
-// on in units of seconds
-unsigned long seconds()
-{
-  long divisor = 1000;
-  return millis() / divisor;
-}
+RTC_DS3231 rtc;
 
 void setup()
 {
   Serial.begin(9600);
+  Serial.println("s");
   Serial3.begin(9600);
+  if (!rtc.begin())
+  {
+    Serial.println("Couldn't find RTC");
+    Serial.flush();
+    while (1)
+      delay(10);
+  }
   delay(1000);
-  phSensor.lastReading = seconds();
-  ecSensor.lastReading = seconds();
+  rtc.adjust(DateTime(2022, 1, 1, 1, 0, 0));
+  DateTime now = rtc.now();
+  phSensor.lastReading = now;
+  ecSensor.lastReading = now;
   phSensor.interval = 10;
   ecSensor.interval = 10;
 }
 
+bool isPassedSensorInterval(DateTime now, int interval, DateTime lastReading)
+{
+  DateTime dispTime = lastReading + TimeSpan(interval);
+  return (dispTime < now);
+}
+
 void loop()
 {
-  delay(3000);
-  unsigned long elapsedSeconds = seconds();
-  // If enough time has elapsed since the last reading
-  // then take a sensor reading and reset lastReading
-  if (elapsedSeconds - phSensor.lastReading > phSensor.interval)
+  DateTime now = rtc.now();
+  if (isPassedSensorInterval(now, phSensor.interval, phSensor.lastReading))
   {
     phSensor.getReading();
     phSensor.sendSensorLog();
-    phSensor.lastReading = seconds();
+    phSensor.lastReading = rtc.now();
     delay(5000);
   }
-  if (elapsedSeconds - ecSensor.lastReading > ecSensor.interval)
+  if (isPassedSensorInterval(now, ecSensor.interval, ecSensor.lastReading))
   {
     ecSensor.getReading();
     ecSensor.sendSensorLog();
-    ecSensor.lastReading = seconds();
+    ecSensor.lastReading = rtc.now();
     delay(5000);
   }
+  delay(2000);
 }

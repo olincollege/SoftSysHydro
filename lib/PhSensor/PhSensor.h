@@ -6,10 +6,10 @@ class PhSensor : public PiWrapper
 {
 public:
     const String type = "ph";
-    unsigned long lastReading;
+    DateTime lastReading;
     float ph = 0.0;
     float maxPh = 7;
-    unsigned long interval = 120;
+    unsigned int interval = 120;
     uint8_t pin;
     // Constructor
     PhSensor(uint8_t analogPin);
