@@ -1,16 +1,17 @@
 #include "PhSensor.h"
 #include "EcSensor.h"
+#include "TempSensor.h"
 #include <RTClib.h>
 
 // Create ph sensor object
 PhSensor phSensor(A0);
 EcSensor ecSensor; // Constructs on Serial3
+TempSensor tempSensor(A2);
 RTC_DS3231 rtc;
 
 void setup()
 {
   Serial.begin(9600);
-  Serial.println("s");
   Serial3.begin(9600);
   if (!rtc.begin())
   {
@@ -24,8 +25,10 @@ void setup()
   DateTime now = rtc.now();
   phSensor.lastReading = now;
   ecSensor.lastReading = now;
-  phSensor.interval = 10;
-  ecSensor.interval = 10;
+  tempSensor.lastReading = now;
+  phSensor.interval = 300;
+  ecSensor.interval = 300;
+  tempSensor.interval = 300;
 }
 
 bool isPassedSensorInterval(DateTime now, int interval, DateTime lastReading)
@@ -49,6 +52,13 @@ void loop()
     ecSensor.getReading();
     ecSensor.sendSensorLog();
     ecSensor.lastReading = rtc.now();
+    delay(5000);
+  }
+  if (isPassedSensorInterval(now, tempSensor.interval, tempSensor.lastReading))
+  {
+    tempSensor.getReading();
+    tempSensor.sendSensorLog();
+    tempSensor.lastReading = rtc.now();
     delay(5000);
   }
   delay(2000);
