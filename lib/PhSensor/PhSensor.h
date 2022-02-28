@@ -23,7 +23,7 @@ public:
     // Gets max pH from pi via wrapper
     // Updates: maxPh data member
     void getMaxPh();
-    // Get dispense interval from pi via wrapper
+    // Get reading interval from pi via wrapper
     // Updates: interval data member
     void getInterval();
 };

@@ -22,7 +22,7 @@ public:
   // Gets max EC from pi via wrapper
   // Updates: maxEc data member
   void getMinEc();
-  // Get dispense interval from pi via wrapper
+  // Get reading interval from pi via wrapper
   // Updates: interval data member
   void getInterval();
 };
