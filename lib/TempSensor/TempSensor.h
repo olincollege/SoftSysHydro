@@ -13,8 +13,8 @@ public:
   const int tempNom = 25;
   DateTime lastReading;
   float temp = 0.0;
-  float analogReading;
-  float resistance;
+  float analogReading = 0.0;
+  float resistance = 0.0;
   unsigned int interval = 120;
   uint8_t pin;
   // Constructor
@@ -27,8 +27,6 @@ public:
   // Get reading interval from pi via wrapper
   // Updates: interval data member
   void getInterval();
-
-private:
   // Calculate resistance from analogReading
   // Updates: resistance data member
   void calcRes();
