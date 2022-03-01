@@ -31,8 +31,7 @@ void TempSensor::getInterval()
   String response = getResponse();
   if (response != "")
   {
-    int intervalInt = response.toInt();
-    interval = long(intervalInt);
+    interval = response.toInt();
   }
 }
 
