@@ -3,7 +3,7 @@
 
 PiWrapper wrapper = PiWrapper();
 
-void test_create_query_str()
+void testCreateQueryStr()
 {
   wrapper.q = {
       "sensor",
@@ -14,7 +14,7 @@ void test_create_query_str()
   TEST_ASSERT(wrapper.query == "sensor:post:ph:7.1");
 }
 
-void test_has_timed_out_true()
+void testHasTimedOutTrue()
 {
   wrapper.timeout = 0;
   unsigned long startTime = millis();
@@ -22,7 +22,7 @@ void test_has_timed_out_true()
   TEST_ASSERT(t);
 }
 
-void test_has_timed_out_false()
+void testHasTimedOutFalse()
 {
   wrapper.timeout = 1000;
   unsigned long startTime = millis();
@@ -33,9 +33,9 @@ void test_has_timed_out_false()
 void setup()
 {
   UNITY_BEGIN();
-  RUN_TEST(test_create_query_str);
-  RUN_TEST(test_has_timed_out_true);
-  RUN_TEST(test_has_timed_out_false);
+  RUN_TEST(testCreateQueryStr);
+  RUN_TEST(testHasTimedOutTrue);
+  RUN_TEST(testHasTimedOutFalse);
   UNITY_END();
 }
 
