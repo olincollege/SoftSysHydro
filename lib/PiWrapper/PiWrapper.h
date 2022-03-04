@@ -18,7 +18,7 @@ public:
         String data;
     } Query;
     Query q;
-    unsigned long timeout = 5000;
+    unsigned long timeout = 500;
     // Send a query to the pi
     void sendQuery();
     // Generate the payload to be sent based on q and update query
