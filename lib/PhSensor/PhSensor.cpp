@@ -14,41 +14,45 @@ void PhSensor::getReading()
 
 bool PhSensor::isAboveRange()
 {
-    if (ph > maxPh)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    };
+    return ph > maxPh;
 }
 
 void PhSensor::sendSensorLog()
 {
-    createQuery("post", ph, type);
+    q = {
+        "sensor",
+        "post",
+        "ph",
+        (String)ph};
     sendQuery();
 }
 
 void PhSensor::getMaxPh()
 {
-    createQuery("get", systemId, "ph_high");
+    q = {
+        "system",
+        "get",
+        "phMax",
+        "1"};
     sendQuery();
     String response = getResponse();
     if (response != "")
     {
-        maxPh = response.toDouble();
+        maxPh = response.toFloat();
     }
 }
 
 void PhSensor::getInterval()
 {
-    createQuery("get", systemId, "sensor_interval");
+    q = {
+        "system",
+        "get",
+        "phSensorInterval",
+        "1"};
     sendQuery();
     String response = getResponse();
     if (response != "")
     {
-        int intervalInt = response.toInt();
-        interval = long(intervalInt);
+        interval = response.toInt();
     }
 }
