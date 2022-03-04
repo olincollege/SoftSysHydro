@@ -2,7 +2,7 @@
 
 String PiWrapper::getResponse()
 {
-    unsigned long startTime = millis();
+    uint64_t startTime = millis();
     String response = "";
     while (true)
     {
@@ -17,23 +17,19 @@ String PiWrapper::getResponse()
     return response;
 }
 
-bool PiWrapper::hasTimedOut(unsigned long startTime)
+bool PiWrapper::hasTimedOut(uint64_t startTime)
 {
-    unsigned long elapsedTime = millis() - startTime;
+    uint64_t elapsedTime = millis() - startTime;
     return elapsedTime >= this->timeout;
 }
 
-void PiWrapper::createQuery(String reqType, String data, String type)
+void PiWrapper::createQuery()
 {
-    query = type + sep + reqType + sep + data;
-}
-
-void PiWrapper::createQuery(String reqType, float data, String type)
-{
-    query = type + sep + reqType + sep + data;
+    query = q.dataType + sep + q.reqType + sep + q.sensorName + sep + q.data;
 }
 
 void PiWrapper::sendQuery()
 {
+    createQuery();
     Serial.println(query);
 }

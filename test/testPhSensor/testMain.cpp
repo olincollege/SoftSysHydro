@@ -3,14 +3,14 @@
 
 PhSensor phSensor(A0);
 
-void test_get_reading()
+void testGetReading()
 {
     phSensor.getReading();
     Serial.println(phSensor.ph);
     TEST_ASSERT(phSensor.ph > 0.0 && phSensor.ph < 15);
 }
 
-void test_is_above_range()
+void testIsAboveRange()
 {
     phSensor.ph = 100;
     TEST_ASSERT_EQUAL(true, phSensor.isAboveRange());
@@ -18,35 +18,35 @@ void test_is_above_range()
     TEST_ASSERT_EQUAL(false, phSensor.isAboveRange());
 }
 
-void test_send_sensor_log()
+void testSendSensorLog()
 {
     phSensor.ph = 1.10;
     phSensor.sendSensorLog();
-    TEST_ASSERT(phSensor.query == "ph:post:1.10")
+    TEST_ASSERT(phSensor.query == "sensor:post:ph:1.10")
 }
 
-void test_get_interval()
+void testGetInterval()
 {
     phSensor.timeout = 0;
     phSensor.getInterval();
-    TEST_ASSERT(phSensor.query == "sensor_interval:get:system/1")
+    TEST_ASSERT(phSensor.query == "system:get:phSensorInterval:1")
 }
 
-void test_get_max_ph()
+void testGetMaxPh()
 {
     phSensor.timeout = 0;
     phSensor.getMaxPh();
-    TEST_ASSERT(phSensor.query == "ph_high:get:system/1")
+    TEST_ASSERT(phSensor.query == "system:get:phMax:1")
 }
 
 void setup()
 {
     UNITY_BEGIN();
-    RUN_TEST(test_get_reading);
-    RUN_TEST(test_is_above_range);
-    RUN_TEST(test_send_sensor_log);
-    RUN_TEST(test_get_interval);
-    RUN_TEST(test_get_max_ph);
+    RUN_TEST(testGetReading);
+    RUN_TEST(testIsAboveRange);
+    RUN_TEST(testSendSensorLog);
+    RUN_TEST(testGetInterval);
+    RUN_TEST(testGetMaxPh);
     UNITY_END();
 }
 

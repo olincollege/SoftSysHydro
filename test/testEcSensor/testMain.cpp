@@ -3,13 +3,14 @@
 
 EcSensor ecSensor;
 
-void test_get_reading()
+void testGetReading()
 {
   ecSensor.getReading();
+  Serial.println(ecSensor.ec);
   TEST_ASSERT(ecSensor.ec > 0.0 && ecSensor.ec < 1500);
 }
 
-void test_is_below_range()
+void testIsBelowRange()
 {
   ecSensor.ec = 1000;
   TEST_ASSERT(!ecSensor.isBelowRange());
@@ -17,35 +18,35 @@ void test_is_below_range()
   TEST_ASSERT(ecSensor.isBelowRange());
 }
 
-void test_send_sensor_log()
+void testSendSensorLog()
 {
   ecSensor.ec = 600.00;
   ecSensor.sendSensorLog();
-  TEST_ASSERT(ecSensor.query.equals("ec:post:600.00"));
+  TEST_ASSERT(ecSensor.query.equals("sensor:post:ec:600.00"));
 }
 
-void test_get_interval()
+void testGetInterval()
 {
   ecSensor.timeout = 0;
   ecSensor.getInterval();
-  TEST_ASSERT(ecSensor.query.equals("sensor_interval:get:system/1"));
+  TEST_ASSERT(ecSensor.query.equals("system:get:ecSensorInterval:1"));
 }
 
-void test_get_min_ec()
+void testGetMinEc()
 {
   ecSensor.timeout = 0;
   ecSensor.getMinEc();
-  TEST_ASSERT(ecSensor.query.equals("ec_low:get:system/1"));
+  TEST_ASSERT(ecSensor.query.equals("system:get:ecMin:1"));
 }
 
 void setup()
 {
   UNITY_BEGIN();
-  RUN_TEST(test_get_reading);
-  RUN_TEST(test_is_below_range);
-  RUN_TEST(test_send_sensor_log);
-  RUN_TEST(test_get_interval);
-  RUN_TEST(test_get_min_ec);
+  RUN_TEST(testGetReading);
+  RUN_TEST(testIsBelowRange);
+  RUN_TEST(testSendSensorLog);
+  RUN_TEST(testGetInterval);
+  RUN_TEST(testGetMinEc);
   UNITY_END();
 }
 
