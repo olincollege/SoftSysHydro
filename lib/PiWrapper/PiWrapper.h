@@ -10,17 +10,23 @@ public:
     String systemId = "system/1";
     String sep = ":";
     String query = "";
+    typedef struct
+    {
+        String dataType;
+        String reqType;
+        String sensorName;
+        String data;
+    } Query;
+    Query q;
     unsigned long timeout = 5000;
     // Send a query to the pi
     void sendQuery();
-    // Generate the payload to be sent and update query
-    void createQuery(String reqType, String data, String type);
-    // Generate the payload to be sent and update query
-    void createQuery(String reqType, float data, String type);
+    // Generate the payload to be sent based on q and update query
+    void createQuery();
     // Wait for and get response after sending a request
     String getResponse();
     // Determines if timeout has occured
-    bool hasTimedOut(unsigned long startTime);
+    bool hasTimedOut(uint64_t startTime);
 };
 
 #endif

@@ -6,6 +6,7 @@ EcSensor ecSensor;
 void test_get_reading()
 {
   ecSensor.getReading();
+  Serial.println(ecSensor.ec);
   TEST_ASSERT(ecSensor.ec > 0.0 && ecSensor.ec < 1500);
 }
 
@@ -21,21 +22,21 @@ void test_send_sensor_log()
 {
   ecSensor.ec = 600.00;
   ecSensor.sendSensorLog();
-  TEST_ASSERT(ecSensor.query.equals("ec:post:600.00"));
+  TEST_ASSERT(ecSensor.query.equals("sensor:post:ec:600.00"));
 }
 
 void test_get_interval()
 {
   ecSensor.timeout = 0;
   ecSensor.getInterval();
-  TEST_ASSERT(ecSensor.query.equals("sensor_interval:get:system/1"));
+  TEST_ASSERT(ecSensor.query.equals("system:get:ecSensorInterval:1"));
 }
 
 void test_get_min_ec()
 {
   ecSensor.timeout = 0;
   ecSensor.getMinEc();
-  TEST_ASSERT(ecSensor.query.equals("ec_low:get:system/1"));
+  TEST_ASSERT(ecSensor.query.equals("system:get:ecMin:1"));
 }
 
 void setup()

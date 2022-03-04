@@ -31,14 +31,14 @@ void test_send_sensor_log()
 {
   tempSensor.temp = 20.50;
   tempSensor.sendSensorLog();
-  TEST_ASSERT(tempSensor.query == "temp:post:20.50")
+  TEST_ASSERT(tempSensor.query == "sensor:post:temp:20.50")
 }
 
 void test_get_interval()
 {
   tempSensor.timeout = 0;
   tempSensor.getInterval();
-  TEST_ASSERT(tempSensor.query == "sensor_interval:get:system/1")
+  TEST_ASSERT(tempSensor.query == "system:get:tempSensorInterval:1")
 }
 
 void setup()

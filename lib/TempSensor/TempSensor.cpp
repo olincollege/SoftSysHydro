@@ -20,13 +20,21 @@ void TempSensor::getReading()
 
 void TempSensor::sendSensorLog()
 {
-  createQuery("post", temp, type);
+  q = {
+      "sensor",
+      "post",
+      "temp",
+      (String)temp};
   sendQuery();
 }
 
 void TempSensor::getInterval()
 {
-  createQuery("get", systemId, "sensor_interval");
+  q = {
+      "system",
+      "get",
+      "tempSensorInterval",
+      "1"};
   sendQuery();
   String response = getResponse();
   if (response != "")
