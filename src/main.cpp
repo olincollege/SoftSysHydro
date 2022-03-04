@@ -41,12 +41,12 @@ void setup()
   phSensor.interval = 300;
   ecSensor.interval = 300;
   tempSensor.interval = 300;
-  phDownPump.interval = 10;
+  phDownPump.interval = 1200;
   phDownPump.onTime = 5;
-  ecUpPump.interval = 10;
+  ecUpPump.interval = 1200;
   ecUpPump.onTime = 6;
-  waterPump.interval = 10;
-  waterPump.onTime = 15;
+  waterPump.interval = 1200;
+  waterPump.onTime = 300;
 }
 
 bool isPassedInterval(int interval, DateTime lastReading)
@@ -162,11 +162,11 @@ void runTempSensor()
 
 void loop()
 {
-  // runPhSensor();
-  // runEcSensor();
-  // runTempSensor();
-  // runPhDownPump();
-  // runEcUpPump();
+  runPhSensor();
+  runEcSensor();
+  runTempSensor();
+  runPhDownPump();
+  runEcUpPump();
   runWaterPump();
   updateParams();
   delay(100);
