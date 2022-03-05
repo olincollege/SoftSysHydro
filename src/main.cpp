@@ -12,7 +12,7 @@ Relay ecUpPump(52, "ec");
 Relay waterPump(51, "water");
 RTC_DS3231 rtc;
 DateTime lastRefresh;
-int refreshParams = 10;
+int refreshParams = 40;
 
 void setup()
 {
@@ -38,15 +38,15 @@ void setup()
   ecUpPump.lastOff = now;
   waterPump.lastOn = now;
   waterPump.lastOff = now;
-  phSensor.interval = 300;
-  ecSensor.interval = 300;
-  tempSensor.interval = 300;
-  phDownPump.interval = 10;
+  phSensor.interval = 30;
+  ecSensor.interval = 30;
+  tempSensor.interval = 30;
+  phDownPump.interval = 65;
   phDownPump.onTime = 5;
-  ecUpPump.interval = 10;
+  ecUpPump.interval = 65;
   ecUpPump.onTime = 6;
-  waterPump.interval = 10;
-  waterPump.onTime = 15;
+  waterPump.interval = 120;
+  waterPump.onTime = 200;
 }
 
 bool isPassedInterval(int interval, DateTime lastReading)
@@ -162,11 +162,11 @@ void runTempSensor()
 
 void loop()
 {
-  // runPhSensor();
-  // runEcSensor();
-  // runTempSensor();
-  // runPhDownPump();
-  // runEcUpPump();
+  runPhSensor();
+  runEcSensor();
+  runTempSensor();
+  runPhDownPump();
+  runEcUpPump();
   runWaterPump();
   updateParams();
   delay(100);

@@ -47,7 +47,7 @@ void PhSensor::getInterval()
     q = {
         "system",
         "get",
-        "phSensorInterval",
+        "phSenseInterval",
         "1"};
     sendQuery();
     String response = getResponse();
