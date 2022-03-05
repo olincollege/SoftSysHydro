@@ -12,7 +12,7 @@ Relay ecUpPump(52, "ec");
 Relay waterPump(51, "water");
 RTC_DS3231 rtc;
 DateTime lastRefresh;
-int refreshParams = 10;
+int refreshParams = 40;
 
 void setup()
 {

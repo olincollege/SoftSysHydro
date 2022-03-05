@@ -48,7 +48,7 @@ void EcSensor::getInterval()
   q = {
       "system",
       "get",
-      "ecSensorInterval",
+      "ecSenseInterval",
       "1"};
   sendQuery();
   String response = getResponse();

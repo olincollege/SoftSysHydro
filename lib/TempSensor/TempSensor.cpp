@@ -33,7 +33,7 @@ void TempSensor::getInterval()
   q = {
       "system",
       "get",
-      "tempSensorInterval",
+      "tempSenseInterval",
       "1"};
   sendQuery();
   String response = getResponse();
