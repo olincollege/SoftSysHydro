@@ -26,3 +26,8 @@ I have added a temperature sensor, an RTC clock module, and relay controls for t
 - Test the full system. This requires connecting all of the sensors and running the system for a longer period of time and ensuring that it performs as expected. This will be considered complete when the system can run for 24 hours without errors
 - Calibrate parameters. This involves setting up a testing resevoir of water, nutrient solution, and ph down solution, then connecting the pumps. Next, I can run the system and adjust the dispensing time until the system reaches an acceptable equilibrium. This will be complete when I have determined numbers for dilution of nutrient solution and amount of time that the pumps should be on.
 - Increase unit or integration testing. This is the least defined task, and will likely become more clear as I learn what common failure modes are. I want to create a way to test the system and simulate a longer period of time. This may require writing a separate piece of code. This will be complete when I have the ability to test the system's serial output.
+
+## Links
+[Task manager](https://todoist.com/app/project/2285722358)  
+[Code repository](https://github.com/olincollege/SoftSysHydro)
+
