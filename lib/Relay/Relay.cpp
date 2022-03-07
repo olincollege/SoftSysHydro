@@ -25,6 +25,7 @@ void Relay::sendTaskLog(int mode)
       name,
       (String)mode};
   sendQuery();
+  String response = getResponse();
 }
 
 void Relay::getInterval()
@@ -35,6 +36,11 @@ void Relay::getInterval()
       name + "TaskInterval",
       "1"};
   sendQuery();
+  String response = getResponse();
+  if (response != "")
+  {
+    interval = response.toInt();
+  }
 }
 
 void Relay::getOnTime()
@@ -45,4 +51,9 @@ void Relay::getOnTime()
       name + "TaskLength",
       "1"};
   sendQuery();
+  String response = getResponse();
+  if (response != "")
+  {
+    interval = response.toInt();
+  }
 }

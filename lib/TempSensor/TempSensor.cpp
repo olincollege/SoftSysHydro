@@ -26,6 +26,7 @@ void TempSensor::sendSensorLog()
       "temp",
       (String)temp};
   sendQuery();
+  String response = getResponse();
 }
 
 void TempSensor::getInterval()
