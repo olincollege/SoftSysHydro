@@ -26,6 +26,7 @@ void EcSensor::sendSensorLog()
       "ec",
       (String)ec};
   sendQuery();
+  String response = getResponse();
 }
 
 void EcSensor::getMinEc()

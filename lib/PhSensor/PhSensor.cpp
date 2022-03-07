@@ -1,5 +1,4 @@
 #include "PhSensor.h"
-#include "ph_grav.h"
 
 PhSensor::PhSensor(uint8_t analogPin)
 {
@@ -8,7 +7,7 @@ PhSensor::PhSensor(uint8_t analogPin)
 
 void PhSensor::getReading()
 {
-    Gravity_pH pH = pin; // Assigns pin for pH signal
+    Gravity_pH pH = pin;
     ph = pH.read_ph();
 }
 
@@ -25,6 +24,7 @@ void PhSensor::sendSensorLog()
         "ph",
         (String)ph};
     sendQuery();
+    String response = getResponse();
 }
 
 void PhSensor::getMaxPh()

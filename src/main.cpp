@@ -12,7 +12,7 @@ Relay ecUpPump(52, "ec");
 Relay waterPump(51, "water");
 RTC_DS3231 rtc;
 DateTime lastRefresh;
-int refreshParams = 40;
+int refreshParams = 300;
 
 void setup()
 {
@@ -27,17 +27,17 @@ void setup()
   }
   delay(1000);
   rtc.adjust(DateTime(2022, 1, 1, 1, 0, 0));
-  DateTime now = rtc.now();
-  lastRefresh = now;
-  phSensor.lastReading = now;
-  ecSensor.lastReading = now;
-  tempSensor.lastReading = now;
-  phDownPump.lastOff = now;
-  phDownPump.lastOn = now;
-  ecUpPump.lastOn = now;
-  ecUpPump.lastOff = now;
-  waterPump.lastOn = now;
-  waterPump.lastOff = now;
+  DateTime oldTime = rtc.now() - TimeSpan(10000); // Set older time to make all actions take place on startup
+  lastRefresh = oldTime;
+  phSensor.lastReading = oldTime;
+  ecSensor.lastReading = oldTime;
+  tempSensor.lastReading = oldTime;
+  phDownPump.lastOff = oldTime;
+  phDownPump.lastOn = oldTime;
+  ecUpPump.lastOn = oldTime;
+  ecUpPump.lastOff = oldTime;
+  waterPump.lastOn = oldTime;
+  waterPump.lastOff = oldTime;
   phSensor.interval = 300;
   ecSensor.interval = 300;
   tempSensor.interval = 300;

@@ -1,6 +1,7 @@
 #ifndef PHSENSOR_H
 #define PHSENSOR_H
 #include "PiWrapper.h"
+#include "ph_grav.h"
 
 class PhSensor : public PiWrapper
 {
