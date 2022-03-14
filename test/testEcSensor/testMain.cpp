@@ -21,6 +21,7 @@ void testIsBelowRange()
 void testSendSensorLog()
 {
   ecSensor.ec = 600.00;
+  ecSensor.timeout = 0;
   ecSensor.sendSensorLog();
   TEST_ASSERT(ecSensor.query.equals("sensor:post:ec:600.00"));
 }

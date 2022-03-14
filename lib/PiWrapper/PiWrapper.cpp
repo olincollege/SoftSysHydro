@@ -9,6 +9,10 @@ String PiWrapper::getResponse()
         if (Serial.available() > 0)
         {
             response = Serial.readStringUntil('\n');
+            while (Serial.available() > 0)
+            {
+                Serial.read();
+            }
             break;
         }
         else if (hasTimedOut(startTime))

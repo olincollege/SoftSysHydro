@@ -30,6 +30,7 @@ void testCalcTemp()
 void testSendSensorLog()
 {
   tempSensor.temp = 20.50;
+  tempSensor.timeout = 0;
   tempSensor.sendSensorLog();
   TEST_ASSERT(tempSensor.query == "sensor:post:temp:20.50")
 }

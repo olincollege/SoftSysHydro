@@ -6,8 +6,6 @@
 class PiWrapper
 {
 public:
-    String port = "/dev/ttyACM0";
-    String systemId = "system/1";
     String sep = ":";
     String query = "";
     typedef struct
@@ -18,7 +16,7 @@ public:
         String data;
     } Query;
     Query q;
-    unsigned long timeout = 500;
+    uint64_t timeout = 20000;
     // Send a query to the pi
     void sendQuery();
     // Generate the payload to be sent based on q and update query
