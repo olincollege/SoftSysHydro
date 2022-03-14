@@ -21,6 +21,7 @@ void testIsAboveRange()
 void testSendSensorLog()
 {
     phSensor.ph = 1.10;
+    phSensor.timeout = 0;
     phSensor.sendSensorLog();
     TEST_ASSERT(phSensor.query == "sensor:post:ph:1.10")
 }
