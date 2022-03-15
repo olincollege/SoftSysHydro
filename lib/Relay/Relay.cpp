@@ -54,6 +54,6 @@ void Relay::getOnTime()
   String response = getResponse();
   if (response != "")
   {
-    interval = response.toInt();
+    onTime = response.toInt();
   }
 }
