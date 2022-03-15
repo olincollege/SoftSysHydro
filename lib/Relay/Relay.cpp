@@ -19,22 +19,24 @@ void Relay::Off()
 
 void Relay::sendTaskLog(int mode)
 {
-  q = {
+  Query q = {
       "task",
       "post",
       name,
       (String)mode};
+  createQuery(q);
   sendQuery();
   String response = getResponse();
 }
 
 void Relay::getInterval()
 {
-  q = {
+  Query q = {
       "system",
       "get",
       name + "TaskInterval",
       "1"};
+  createQuery(q);
   sendQuery();
   String response = getResponse();
   if (response != "")
@@ -45,11 +47,12 @@ void Relay::getInterval()
 
 void Relay::getOnTime()
 {
-  q = {
+  Query q = {
       "system",
       "get",
       name + "TaskLength",
       "1"};
+  createQuery(q);
   sendQuery();
   String response = getResponse();
   if (response != "")

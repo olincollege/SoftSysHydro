@@ -20,22 +20,24 @@ bool EcSensor::isBelowRange()
 
 void EcSensor::sendSensorLog()
 {
-  q = {
+  Query q = {
       "sensor",
       "post",
       "ec",
       (String)ec};
+  createQuery(q);
   sendQuery();
   String response = getResponse();
 }
 
 void EcSensor::getMinEc()
 {
-  q = {
+  Query q = {
       "system",
       "get",
       "ecMin",
       "1"};
+  createQuery(q);
   sendQuery();
   String response = getResponse();
   if (response != "")
@@ -46,11 +48,12 @@ void EcSensor::getMinEc()
 
 void EcSensor::getInterval()
 {
-  q = {
+  Query q = {
       "system",
       "get",
       "ecSenseInterval",
       "1"};
+  createQuery(q);
   sendQuery();
   String response = getResponse();
   if (response != "")

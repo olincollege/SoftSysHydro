@@ -18,22 +18,24 @@ bool PhSensor::isAboveRange()
 
 void PhSensor::sendSensorLog()
 {
-    q = {
+    Query q = {
         "sensor",
         "post",
         "ph",
         (String)ph};
+    createQuery(q);
     sendQuery();
     String response = getResponse();
 }
 
 void PhSensor::getMaxPh()
 {
-    q = {
+    Query q = {
         "system",
         "get",
         "phMax",
         "1"};
+    createQuery(q);
     sendQuery();
     String response = getResponse();
     if (response != "")
@@ -44,11 +46,12 @@ void PhSensor::getMaxPh()
 
 void PhSensor::getInterval()
 {
-    q = {
+    Query q = {
         "system",
         "get",
         "phSenseInterval",
         "1"};
+    createQuery(q);
     sendQuery();
     String response = getResponse();
     if (response != "")

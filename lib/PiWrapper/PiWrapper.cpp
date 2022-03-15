@@ -27,13 +27,12 @@ bool PiWrapper::hasTimedOut(uint64_t startTime)
     return elapsedTime >= this->timeout;
 }
 
-void PiWrapper::createQuery()
+void PiWrapper::createQuery(Query q)
 {
     query = q.dataType + sep + q.reqType + sep + q.sensorName + sep + q.data;
 }
 
 void PiWrapper::sendQuery()
 {
-    createQuery();
     Serial.println(query);
 }
