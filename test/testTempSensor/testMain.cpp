@@ -39,7 +39,7 @@ void testGetInterval()
 {
   tempSensor.timeout = 0;
   tempSensor.getInterval();
-  TEST_ASSERT(tempSensor.query == "system:get:tempSensorInterval:1")
+  TEST_ASSERT(tempSensor.query == "system:get:tempSenseInterval:1")
 }
 
 void setup()

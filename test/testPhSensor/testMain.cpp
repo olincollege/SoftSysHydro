@@ -30,7 +30,7 @@ void testGetInterval()
 {
     phSensor.timeout = 0;
     phSensor.getInterval();
-    TEST_ASSERT(phSensor.query == "system:get:phSensorInterval:1")
+    TEST_ASSERT(phSensor.query == "system:get:phSenseInterval:1")
 }
 
 void testGetMaxPh()

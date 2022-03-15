@@ -5,12 +5,12 @@ PiWrapper wrapper = PiWrapper();
 
 void testCreateQueryStr()
 {
-  wrapper.q = {
+  PiWrapper::Query q = {
       "sensor",
       "post",
       "ph",
       "7.1"};
-  wrapper.createQuery();
+  wrapper.createQuery(q);
   TEST_ASSERT(wrapper.query == "sensor:post:ph:7.1");
 }
 

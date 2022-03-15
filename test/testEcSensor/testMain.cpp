@@ -7,7 +7,7 @@ void testGetReading()
 {
   ecSensor.getReading();
   Serial.println(ecSensor.ec);
-  TEST_ASSERT(ecSensor.ec > 0.0 && ecSensor.ec < 1500);
+  TEST_ASSERT(ecSensor.ec > -0.01 && ecSensor.ec < 1500);
 }
 
 void testIsBelowRange()
@@ -30,7 +30,7 @@ void testGetInterval()
 {
   ecSensor.timeout = 0;
   ecSensor.getInterval();
-  TEST_ASSERT(ecSensor.query.equals("system:get:ecSensorInterval:1"));
+  TEST_ASSERT(ecSensor.query.equals("system:get:ecSenseInterval:1"));
 }
 
 void testGetMinEc()
