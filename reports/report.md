@@ -4,7 +4,7 @@
 
 ## Project Goal
 
-The goal of this project is to autonomously monitor and control a hydroponics garden with an arduino. A hydroponics garden is a way of growing plants without soil using water that contains the nutrients that the plants need. This project aims to automate the task of checking and adjusting the pH and nutrient levels as well as turning the water pump on and off.
+The goal of this project is to autonomously monitor and control a hydroponics garden with an Arduino. A hydroponics garden is a way of growing plants without soil using water that contains the nutrients that the plants need. This project aims to automate the task of checking and adjusting the pH and nutrient levels as well as turning the water pump on and off.
 
 The lower bound is to make a program in c++ that integrates with a ph sensor, ec sensor, temperature sensor, and peristaltic pumps to control the system. The MVP will be done in an object oriented way and will include unit testing. A stretch goal will be to include relay outlet controls, a water level sensor, and a seperate standalone testing program. This is a project that was started in PINT's hydroponics subteam. There is currently code that has the ph sensor and ec sensor integrated that needs to be refactored. The starting version of this code can be found [here.](https://github.com/Olin-Hydro/circadia/commit/e49ae3136cc66cc65726b6823d3c179ce57df0de)
 
@@ -32,7 +32,7 @@ In this project I want to develop my C++ skills and learn how to write my own li
 
 ## Design
 
-This project was created to work in the system shown below. On the left we have sensors and pumps that control the hydroponics garden. The firmware that was written for this project runs on the Arduino, and is responsible for interfacing with our harware to control the system. The Arduino sends and receives data over serial to a Raspberry Pi. The Raspberry Pi transforms serial data into api requests that stores the data in our Hydro API. The arduino can also request data from the Raspberry Pi to adjust parameters of the system, like how often to take pH readings. 
+This project was created to work in the system shown below. On the left we have sensors and pumps that control the hydroponics garden. The firmware that was written for this project runs on the Arduino, and is responsible for interfacing with our harware to control the system. The Arduino sends and receives data over serial to a Raspberry Pi. The Raspberry Pi transforms serial data into api requests that stores the data in our Hydro API. The Arduino can also request data from the Raspberry Pi to adjust parameters of the system, like how often to take pH readings. 
 
 ![](https://codimd.s3.shivering-isles.com/demo/uploads/7ec70f1eb99ae6f0e09425181.png)
 
@@ -84,7 +84,7 @@ This function checks if enough time has passed since the last reading was taken.
 
 ### TempSensor
 
-Below is the implementation of the [temperature sensor class](https://github.com/olincollege/SoftSysHydro/tree/main/lib/TempSensor). This offers an example of how the other classes are written. The getReading function takes a temperature sensor reading and updates the temp data member. After this, the new value can be sent to the pi using sendSensorLog. Lastly, getInterval pulls data from our api through the pi to change how often a sensor reading is taken. There are a number of helper functions and constants as well that change the raw thermistor reading into a temperature.
+Below is the implementation of the [temperature sensor class](https://github.com/olincollege/SoftSysHydro/tree/main/lib/TempSensor). This offers an example of how the other classes are written. The getReading function takes a temperature sensor reading and updates the temp data member. After this, the new value can be sent to the pi using sendSensorLog. This message would like something like this: ```sensor:post:temp:21.33```. Lastly, getInterval pulls data from our api through the pi to change how often a sensor reading is taken. There are a number of helper functions and constants as well that change the raw thermistor reading into a temperature.
 
 ```c++
 class TempSensor : public PiWrapper
@@ -120,6 +120,7 @@ public:
   void calcTemp();
 };
 ```
+
 
 ### PiWrapper
 
@@ -191,7 +192,7 @@ public:
     bool hasTimedOut(uint64_t startTime);
 };
 ```
-There is no reason to keep track of Query q after the query string is created. This means that memory is being wasted by keeping the variable in this class, rather than allowing it to get destoroyed when the calling function's stack frame is discarded. Further, removing q makes it clear that the caller must provide all pieces of the Query struct, preventing unintended reuse from previous calls.
+There is no reason to keep track of Query q after the query string is created. This means that memory is being wasted by keeping the variable in this class, rather than allowing it to get destroyed when the calling function's stack frame is discarded. Further, removing q makes it clear that the caller must provide all pieces of the Query struct, preventing unintended reuse from previous calls.
 
 ## Unit Testing
 
@@ -207,7 +208,7 @@ testRelay       megaatmega2560  PASSED    00:00:10.879
 testTempSensor  megaatmega2560  PASSED    00:00:12.240
 
 ```
-Below is a simplified test file for the temperature sensor. Each test is defined as a function with an assertion. The tests are then run one by one in the setup function. The full temperature sensor test file can be found [here](https://github.com/olincollege/SoftSysHydro/blob/main/test/testTempSensor/testMain.cpp).
+Below is a simplified test file for the temperature sensor. Each test is defined as a function with an assertion. The tests are then run one by one in the setup function. The full temperature sensor test file can be found [here](https://github.com/olincollege/SoftSysHydro/blob/main/test/testTempSensor/testMain.cpp). 
 ```c
 #include <TempSensor.h>
 #include <unity.h>
@@ -230,10 +231,6 @@ void setup()
 ```
 
 
-## Summary
+## Reflection
 
-
-
-## Links
-[Task manager](https://todoist.com/app/project/2285722358)  
-[Code repository](https://github.com/olincollege/SoftSysHydro)
+I addressed my learning goals well in this project. I feel much more comfortable with c++ syntax and usage. I wrote the classes to be as general as possible to make them portable to new projects. I originally planned to remove my usage of the Arduino libraries, however instead I kept them and learned about how they are implemented and optimized for Arduinos. I explored some memory management in PiWrapper, but did not consider it as much as I had hoped. This program does not depend on speed or have any major memory limitations while running, which made it difficult to prioritize. I acccomplished a middle bound in this project. I was able to get all the lower bound items as well as the relay outlet controls. When I had finished these main items, my focus shifted to testing and calibrating. This project can successfully run in our pipeline for over 24 hours without interruption. It can take pH, temperature, and conductivity readings, as well as adjust the pH, and nutrient levels using pumps.
